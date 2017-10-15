@@ -1,0 +1,52 @@
+from SimpleCV import*
+cam=Camera()
+img=cam.getImage()
+h=img.height
+w=img.width
+screensize=w*h
+mini=0.1*screensize
+maxi=0.8*screensize
+display=Display()
+
+def print_color(color):
+    newlayer=DrawingLayer(img.size())
+    newlayer.centeredRectangle((100,100),(200,200),filled=True,color=Color.WHITE)
+    newlayer.setLayerAlpha(75)
+    text="Color="+color
+    newlayer.text(text,(20,20),color=Color.BLACK)
+    return newlayer
+while display.isNotDone():
+    img=img=cam.getImage().flipHorizontal()
+    hsv=img.toHSV()
+    blob=hsv.findBlobs(minsize=mini,maxsize=maxi)
+    color=""
+    if blob:
+        
+        big_blob=blob[-1];
+        
+        mean=big_blob.meanColor()
+        big_blob.drawMinRect(color=Color.RED,width=3,alpha=128)
+        hue=int(mean[0])
+        print hue
+        if hue>0 and hue<=20:
+            color="Red"
+        elif hue>21 and hue<=40:
+            color="Orange"
+        elif hue>40 and hue<=80:
+            color="Yellow"
+        elif hue>80 and hue<=160:
+            color="Green"
+        elif hue>160 and hue<=200:
+            color="Light Blue"
+        elif hue>201 and hue<=260:
+            color="Blue"
+        elif hue>260 and hue<=320:
+            color="pink"
+        elif hue>320 and hue<360:
+            color="Red"
+        else:
+            color="White"
+        layer=print_color(color)
+        hsv.addDrawingLayer(layer)
+        hsv.show()
+        

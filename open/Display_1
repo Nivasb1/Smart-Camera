@@ -1,0 +1,25 @@
+"""
+from SimpleCV import*
+display=Display()
+cam=Camera()
+
+while not display.isDone():
+    cam.getImage().flipHorizontal()
+    time.sleep(0.01)
+    if display.mouseLeft:
+        display.done=True
+
+"""
+from SimpleCV import *
+disp = Display()
+cam = Camera()
+while  disp.isNotDone():
+    img = cam.getImage()
+    dwn = disp.leftButtonDownPosition()
+    up = disp.leftButtonUpPosition()
+    print disp.mouseWheelUp
+    if( up is not None and dwn is not None):
+        bb = disp.pointsToBoundingBox(up,dwn)
+        img.drawRectangle(bb[0],bb[1],bb[2],bb[3])
+    img.save(disp)
+     

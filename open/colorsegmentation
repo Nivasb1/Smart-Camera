@@ -1,0 +1,6 @@
+from SimpleCV import*
+img=Image('logo')
+img1=img.colorDistance(Color.BLUE)
+img1.show()
+blue_extract=img-img1
+blue_extract.show()

@@ -1,0 +1,6 @@
+tinydict = {'name': 'Nivas','code':1234, 'dept': 'EE'}
+#print tinydict[1]       
+print tinydict['dept']           
+print tinydict          
+print tinydict.keys()   
+print tinydict.values()

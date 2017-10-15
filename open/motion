@@ -1,0 +1,17 @@
+from SimpleCV import*
+cam=Camera()
+prev=cam.getImage()
+display=Display()
+threshold=3
+while display.isNotDone():
+    time.sleep(0.2)
+    current=cam.getImage()
+    diff=current-prev
+    matrix=diff.getNumpy()
+    mean=matrix.mean()
+    print mean
+    diff.show()
+    if mean>3:
+        print 'motion detected'
+    prev=current
+    

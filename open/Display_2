@@ -1,0 +1,16 @@
+from SimpleCV import*
+display=Display()
+cam=Camera()
+count=0
+while display.isNotDone():
+    img=cam.getImage()
+    if display.mouseLeft:
+        count+=1
+        print count
+        time.sleep(1)
+        
+    elif display.mouseRight:
+        count-=1
+        print count
+        time.sleep(0.001)
+    img.save(display)

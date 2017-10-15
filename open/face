@@ -1,0 +1,18 @@
+from SimpleCV import*
+
+cam=Camera(0,{"width":320,"height":240})
+disp=Display()
+while disp.isNotDone():
+    img=cam.getImage().flipHorizontal()
+    face=HaarCascade('face.xml')
+    gray=img.grayscale()
+    autoface=gray.findHaarFeatures(face)
+    if autoface is not None:
+        f=autoface[-1].boundingBox()
+        x=f[0]
+        y=f[1]
+        w=f[2]
+        h=f[3]
+        #facelayer=DrawingLayer(img.size())
+        img.dl().rectangle((x,y),(w,h),color=Color.GREEN,width=2,filled=False)
+    img.show()

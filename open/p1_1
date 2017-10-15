@@ -1,0 +1,9 @@
+from SimpleCV import Image
+
+img = Image('lenna')
+
+corners = [(0, 0), (450, 0), (500, 600), (50, 600)]  
+
+straight = img.shear(corners)  
+
+straight.show()

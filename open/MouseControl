@@ -1,0 +1,39 @@
+from SimpleCV import*
+from pymouse import PyMouse
+m=PyMouse()
+dsize=m.screen_size()
+desk_width=dsize[0]
+desk_height=dsize[1]
+print desk_width,desk_height
+
+cam=Camera()
+img=cam.getImage()
+size=img.size()
+img_height=img.height
+img_width=img.width
+print img_height,img_width,size
+
+ht_conv=float(desk_height/img_height)
+wt_conv=float(desk_width/img_width)
+
+HUE=170
+disp=Display()
+
+while disp.isNotDone():
+    img=cam.getImage().flipHorizontal()
+    hsv=img.toHSV()
+
+    dis=hsv.hueDistance(HUE)
+    bin=dis.binarize(20)
+    eroded=bin.erode()
+    dilated=eroded.dilate()
+    blobs=dilated.findBlobs()
+    img.show()
+    if blobs:
+        center=blobs[-1].centroid()
+        print center
+        time.sleep(0.2)
+        x=int(center[0])
+        y=int(center[1])
+        m.move(x,y)
+    

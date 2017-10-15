@@ -1,0 +1,39 @@
+from SimpleCV import*
+cam=Camera()
+img=cam.getImage()
+display=Display()
+height=img.height
+width=img.width
+screensize=width*height
+threshold=160
+
+def onLayer():
+    newlayer=DrawingLayer((width,height))
+    newlayer.circle((width/2,height/2),width/4,filled=True,color=Color.BLUE)
+    newlayer.setLayerAlpha(70)
+    newlayer.text("ON",(width/2,height/2))
+    return newlayer
+
+def offLayer():
+    newlayer=DrawingLayer((width,height))
+    newlayer.circle((width/2,height/2),width/4,filled=True,color=Color.RED)
+    newlayer.setLayerAlpha(70)
+    newlayer.text("OFF",(width/2,height/2))
+    return newlayer
+
+while display.isNotDone():
+    img=cam.getImage()
+    minblobsize=0.1*screensize
+    maxblobsize=0.8*screensize
+    blobs=img.findBlobs(minsize=minblobsize,maxsize=maxblobsize)
+  
+    layer=offLayer()
+    if blobs:
+        avg=np.mean(blobs[-1].meanColor())
+        print avg
+        if avg>threshold:
+            layer=onLayer()
+        
+    
+    img.addDrawingLayer(layer)
+    img.show()

@@ -1,0 +1,26 @@
+from SimpleCV import*
+img=Image('logo')
+hsv=img.toHSV()
+HUE=0
+dis=hsv.hueDistance(HUE)
+bin=dis.binarize(20)
+eroded=bin.erode()
+dilated=eroded.dilate()
+import time
+
+img.show()
+time.sleep(5)
+hsv.show()
+time.sleep(5)
+dis.show()
+time.sleep(5)
+bin.show()
+time.sleep(5)
+
+eroded.show()
+time.sleep(5)
+dilated.show()
+time.sleep(5)
+
+
+

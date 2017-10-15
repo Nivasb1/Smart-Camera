@@ -1,0 +1,9 @@
+from SimpleCV import*
+lenna=Image('lenna')
+pix=lenna.getPixel(100,130)
+lenna[100,130]=(pix[0],0,0)
+print lenna.height
+resimage=lenna.adaptiveScale((lenna.width*2,lenna.height),'True')
+emb = lenna.embiggen((1000, 800), Color.GREEN, (100, 100))
+print lenna[100,130]
+emb.show()
