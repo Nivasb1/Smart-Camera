@@ -1,0 +1,35 @@
+from pykeyboard import PyKeyboard
+k=PyKeyboard()
+import time
+from SimpleCV import*
+cam=Camera(0,{"width":320,"height":240})
+paused=False
+while 1: 
+    img=cam.getImage().flipHorizontal()
+    face_segment=HaarCascade("face.xml")
+    gray=img.grayscale()
+    autoface=gray.findHaarFeatures(face_segment)
+    if autoface is not None:
+        if paused:
+            k.tap_key(k.space_key)
+            paused=False
+            print "continuing"
+            
+    else:
+        if not paused:
+            k.tap_key(k.space_key)
+            paused=True
+            print "paused"
+"""
+from SimpleCV import*
+lenna=Image('lenna')
+pix=lenna.getPixel(100,130)
+lenna[100,130]=(pix[0],0,0)
+print lenna.height
+resimage=lenna.adaptiveScale((lenna.width*2,lenna.height),'True')
+emb = lenna.embiggen((1000, 800), Color.GREEN, (100, 100))
+print lenna[100,130]
+emb.show()
+    time.sleep(0.25)
+
+"""
